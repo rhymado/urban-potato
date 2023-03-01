@@ -16,8 +16,24 @@ app.get("/", (req, res) => {
   //   res.json({
   //     msg: "Selamat Datang di Toko Kopi API",
   //   });
-  const path = require("path");
-  res.status(201).sendFile(path.join(__dirname, "/src/html/welcome.html"));
+  //   const path = require("path");
+  //   res.status(201).sendFile(path.join(__dirname, "/src/html/welcome.html"));
+  const db = require("./src/configs/postgre");
+  db.query(
+    "select id, email, display_name, birth_date from users",
+    (err, result) => {
+      if (err) {
+        console.log(err.message);
+        res.status(500).json({
+          msg: "Internal Server Error",
+        });
+        return;
+      }
+      res.status(200).json({
+        data: result.rows,
+      });
+    }
+  );
 });
 
 app.listen(PORT, () => {
