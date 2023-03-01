@@ -1,0 +1,9 @@
+{
+  "name": "kopi_toko",
+  "version": "1.0.0",
+  "description": "Aplikasi Toko Kopi",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Fazztrack",
+  "license": "ISC"
+}
