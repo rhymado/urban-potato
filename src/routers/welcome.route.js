@@ -1,13 +1,10 @@
 const { Router } = require("express");
-const path = require("path");
+
+const welcomeController = require("../controllers/welcome.controller");
+
 const welcomeRouter = Router();
 
 // localhost/
-welcomeRouter.get("/", (req, res) => {
-  //   res.json({
-  //     msg: "Selamat Datang di Toko Kopi API",
-  //   });
-  res.status(201).sendFile(path.join(__dirname, "../html/welcome.html"));
-});
+welcomeRouter.get("/", welcomeController.welcomePage);
 
 module.exports = welcomeRouter;
