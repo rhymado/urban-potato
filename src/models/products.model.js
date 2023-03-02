@@ -2,7 +2,8 @@ const db = require("../configs/postgre");
 
 const getProducts = (q) => {
   return new Promise((resolve, reject) => {
-    let sql = "select * from products ORDER BY ";
+    let sql = `select p.id, p.name AS product, p.price, c.name AS category from products p 
+    join categories c on p.category_id = c.id ORDER BY `;
     let order = "id ASC";
     if (q.order === "cheapest") {
       order = "price ASC";
