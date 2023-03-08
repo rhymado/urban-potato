@@ -4,6 +4,7 @@ require("dotenv").config();
 // dotenv.config()
 // <es6 require
 const express = require("express");
+const cors = require("cors");
 // >es6 import
 // import exp from "express";
 
@@ -13,6 +14,7 @@ const app = express();
 const { serverPort } = require("./src/configs/environment");
 const PORT = serverPort || 8080;
 
+app.use(cors());
 // parser untuk body
 app.use(express.urlencoded({ extended: false })); // form-urlencoded
 app.use(express.json()); // raw json
