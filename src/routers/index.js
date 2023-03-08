@@ -10,12 +10,14 @@ const welcomeRouter = require("./welcome.route");
 const usersRouter = require("./users.route");
 const productsRouter = require("./products.route");
 const authRouter = require("./auth.route");
+const transactionRouter = require("./transactions.route");
 
 const masterRouter = Router();
 
 masterRouter.use("/users", usersRouter);
 masterRouter.use("/products", productsRouter);
 masterRouter.use("/auth", authRouter);
+masterRouter.use("/transactions", transactionRouter);
 masterRouter.use("/", welcomeRouter);
 
 module.exports = masterRouter;
