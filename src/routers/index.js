@@ -11,6 +11,7 @@ const usersRouter = require("./users.route");
 const productsRouter = require("./products.route");
 const authRouter = require("./auth.route");
 const transactionRouter = require("./transactions.route");
+const commentsRouter = require("./comments.route");
 
 const masterRouter = Router();
 
@@ -18,6 +19,8 @@ masterRouter.use("/users", usersRouter);
 masterRouter.use("/products", productsRouter);
 masterRouter.use("/auth", authRouter);
 masterRouter.use("/transactions", transactionRouter);
+masterRouter.use("/comments", commentsRouter);
+
 masterRouter.use("/", welcomeRouter);
 
 module.exports = masterRouter;

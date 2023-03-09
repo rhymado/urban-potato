@@ -28,7 +28,15 @@ app.use(express.static("public"));
 const masterRouter = require("./src/routers");
 app.use(masterRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server is running at port ${PORT}`);
-  //   console.log("Welcome");
-});
+const { client } = require("./src/configs/mongo");
+
+client
+  .connect()
+  .then(() => {
+    console.log("Mongo DB Connected");
+    app.listen(PORT, () => {
+      console.log(`Server is running at port ${PORT}`);
+      //   console.log("Welcome");
+    });
+  })
+  .catch((err) => console.log(err));

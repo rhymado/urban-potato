@@ -6,4 +6,5 @@ module.exports = {
   pwd: process.env.DB_PWD,
   serverPort: process.env.SERVER_PORT,
   jwtSecret: process.env.JWT_SECRET,
+  mongoPass: process.env.MONGO_PWD,
 };
