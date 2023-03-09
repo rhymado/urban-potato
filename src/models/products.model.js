@@ -84,9 +84,20 @@ const insertProducts = (data) => {
   });
 };
 
+const updateImageProducts = (fileLink, productId) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE products SET image = $1 WHERE id = $2 RETURNING *";
+    db.query(sql, [fileLink, productId], (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    });
+  });
+};
+
 module.exports = {
   getProducts,
   insertProducts,
   getProductDetail,
   getMetaProducts,
+  updateImageProducts,
 };

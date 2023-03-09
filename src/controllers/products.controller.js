@@ -58,8 +58,25 @@ const insertProducts = async (req, res) => {
   }
 };
 
+const patchImageProducts = async (req, res) => {
+  const fileLink = `/images/${req.file.filename}`;
+  try {
+    const result = await productsModel.updateImageProducts(fileLink, req.params.productId);
+    res.status(200).json({
+      data: result.rows,
+      msg: "Success Updating Image",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      msg: "Internal Server Error",
+    });
+  }
+};
+
 module.exports = {
   getProducts,
   insertProducts,
   getProductDetail,
+  patchImageProducts,
 };

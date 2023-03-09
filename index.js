@@ -21,9 +21,9 @@ app.use(express.json()); // raw json
 // body akan dimasukkan ke req.body
 
 const morgan = require("morgan");
-app.use(
-  morgan(":method :url :status :res[content-length] - :response-time ms")
-);
+app.use(morgan(":method :url :status :res[content-length] - :response-time ms"));
+
+app.use(express.static("public"));
 
 const masterRouter = require("./src/routers");
 app.use(masterRouter);
