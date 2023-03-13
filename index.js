@@ -28,15 +28,30 @@ app.use(express.static("public"));
 const masterRouter = require("./src/routers");
 app.use(masterRouter);
 
-const { client } = require("./src/configs/mongo");
+// const { client } = require("./src/configs/mongo");
 
-client
-  .connect()
+// client
+//   .connect()
+//   .then(() => {
+//     console.log("Mongo DB Connected");
+//     app.listen(PORT, () => {
+//       console.log(`Server is running at port ${PORT}`);
+//       //   console.log("Welcome");
+//     });
+//   })
+//   .catch((err) => console.log(err));
+
+const mongoose = require("mongoose");
+const { mongoPass, mongoDbName, mongoDbHost, mongoDbUser } = require("./src/configs/environment");
+
+mongoose
+  .connect(
+    `mongodb+srv://${mongoDbUser}:${mongoPass}@${mongoDbHost}/${mongoDbName}?retryWrites=true&w=majority`
+  )
   .then(() => {
     console.log("Mongo DB Connected");
     app.listen(PORT, () => {
-      console.log(`Server is running at port ${PORT}`);
-      //   console.log("Welcome");
+      console.log(`Server us running at port ${PORT}`);
     });
   })
   .catch((err) => console.log(err));

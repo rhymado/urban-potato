@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const { jwtSecret } = require("../configs/environment");
+const { error } = require("../utils/response");
 
 const checkToken = (req, res, next) => {
   // ambil token dari Header
@@ -10,23 +11,16 @@ const checkToken = (req, res, next) => {
   // via authorization header berbentuk bearer token
   // bearer token
   // verifikasi token
-  if (!bearerToken)
-    return res.status(403).json({
-      msg: "Silahkan Login Terlebih Dahulu",
-    });
+  if (!bearerToken) return error(res, { status: 403, message: "Silahkan Login Terlebih Dahulu" });
   const token = bearerToken.split(" ")[1]; // ["Bearer", "token"]
   jwt.verify(token, jwtSecret, (err, payload) => {
     // jika tidak, maka tolak akses
     if (err && err.name)
       // error jwt
-      return res.status(403).json({
-        msg: err.message,
-      });
+      return error(res, { status: 403, message: err.message });
     if (err)
       // generic error
-      return res.status(500).json({
-        msg: "Internal Server Error",
-      });
+      return error(res, { status: 500, message: err.message });
     // jika valid, maka lanjut ke controller
     // attach payload ke object request
     req.authInfo = payload;
