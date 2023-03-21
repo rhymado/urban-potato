@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 
 const authModels = require("../models/auth.model");
 const { jwtSecret } = require("../configs/environment");
+const response = require("../utils/response");
 
 const login = async (req, res) => {
   try {
@@ -44,6 +45,25 @@ const login = async (req, res) => {
     res.status(500).json({
       msg: "Internal Server Error",
     });
+  }
+};
+
+const register = async (req, res) => {
+  const { body } = req;
+  try {
+    // cek email duplicate
+    const verificationResult = await authModels.userVerification(body);
+    if (verificationResult.rows.length > 0)
+      return response.error(res, { status: 400, message: "Duplicate Email" });
+
+    // hash password
+    const hashedPassword = await bcrypt.hash(body.pwd, 10);
+    await authModels.createNewUser(body.email, hashedPassword, body.phoneNumber);
+    return res.status(500).json({
+      msg: "User Created",
+    });
+  } catch (err) {
+    response.error(res, { status: 500, message: "Internal Server Error" });
   }
 };
 
@@ -91,4 +111,4 @@ const editPassword = async (req, res) => {
 
 // const forgotPassword = (req, res) => {};
 
-module.exports = { login, privateAccess, editPassword };
+module.exports = { login, privateAccess, editPassword, register };

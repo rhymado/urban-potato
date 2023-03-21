@@ -3,9 +3,18 @@ const db = require("../configs/postgre");
 const userVerification = (body) => {
   return new Promise((resolve, reject) => {
     // verifikasi ke db
-    const sql =
-      "SELECT id, display_name, password FROM users WHERE email=$1";
+    const sql = "SELECT id, display_name, password FROM users WHERE email=$1";
     db.query(sql, [body.email], (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    });
+  });
+};
+
+const createNewUser = (email, pwd, phone) => {
+  return new Promise((resolve, reject) => {
+    const sql = "INSERT INTO users (email, password, phone_number) VALUES ($1, $2, $3)";
+    db.query(sql, [email, pwd, phone], (err, result) => {
       if (err) return reject(err);
       resolve(result);
     });
@@ -32,4 +41,4 @@ const editPassword = (newPassword, userId) => {
   });
 };
 
-module.exports = { userVerification, getPassword, editPassword };
+module.exports = { userVerification, getPassword, editPassword, createNewUser };
